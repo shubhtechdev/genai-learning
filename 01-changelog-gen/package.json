@@ -1,0 +1,19 @@
+{
+  "name": "changelog-gen",
+  "version": "1.0.0",
+  "description": "The pipeline is simple: raw git commits go in, a structured, human-readable changelog comes out",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.46.0",
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^17.3.1"
+  }
+}
