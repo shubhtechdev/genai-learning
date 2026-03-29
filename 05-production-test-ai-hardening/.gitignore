@@ -140,3 +140,4 @@ vite.config.ts.timestamp-*
 
 .logs/*
 /evals/results-*.json
+results-*.txt
