@@ -1,0 +1,24 @@
+{
+  "name": "05-production-test-ai-hardening",
+  "version": "1.0.0",
+  "description": "> Coming soon — building next.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start:eval": "node index.js eval",
+    "start:eval-v1.1": "node index.js eval v1.1 --verbose",
+    "start:eval-v1.2": "node index.js eval v1.2 --verbose",
+    "start:query": "node index.js 'How do I use streaming with Gemini?'",
+    "start:query1": "node index.js 'Show me how to stream responses from Gemini'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.46.0",
+    "dotenv": "^17.3.1",
+    "ioredis": "^5.10.1",
+    "pg": "^8.20.0"
+  }
+}

@@ -20,13 +20,13 @@ Each phase produces a real, working project. Concepts compound from phase to pha
 
 ## The roadmap
 
-| Phase                                               | Project                   | Core concept                            | Status         |
-| --------------------------------------------------- | ------------------------- | --------------------------------------- | -------------- |
-| [1 — LLM Basics](#phase-1--smart-changelog-generator) | Smart changelog generator | Prompting, structured output, streaming | ✅ Complete    |
-| [2 — Prompting](#phase-2--code-review-bot)            | Code review bot           | Prompt chaining, schema-first design    | ✅ Complete    |
-| [3 — RAG](#phase-3--docs-qa-api)                      | Docs Q&A API              | Embeddings, vector search, grounding    | ✅ Complete    |
-| [4 — Agents](#phase-4--github-issue-triage-agent)     | GitHub issue triage agent | ReAct loop, function calling            | ✅ Complete    |
-| [5 — Production](#phase-5--production-ai-hardening)   | Production AI hardening   | Caching, evals, observability, cost     | 🔄 In progress |
+| Phase                                               | Project                   | Core concept                            | Status      |
+| --------------------------------------------------- | ------------------------- | --------------------------------------- | ----------- |
+| [1 — LLM Basics](#phase-1--smart-changelog-generator) | Smart changelog generator | Prompting, structured output, streaming | ✅ Complete |
+| [2 — Prompting](#phase-2--code-review-bot)            | Code review bot           | Prompt chaining, schema-first design    | ✅ Complete |
+| [3 — RAG](#phase-3--docs-qa-api)                      | Docs Q&A API              | Embeddings, vector search, grounding    | ✅ Complete |
+| [4 — Agents](#phase-4--github-issue-triage-agent)     | GitHub issue triage agent | ReAct loop, function calling            | ✅ Complete |
+| [5 — Production](#phase-5--production-ai-hardening)   | Production AI hardening   | Caching, evals, observability, cost     | ✅ Complete |
 
 ---
 
@@ -34,42 +34,80 @@ Each phase produces a real, working project. Concepts compound from phase to pha
 
 ```
 genai-roadmap/
-├── README.md                    ← you are here
-├── phase1-changelog-gen/        ← Smart changelog generator
+├── README.md                      ← you are here
+├── phase1-changelog-gen/          ← Smart changelog generator
 │   ├── README.md
+│   ├── .env.example
 │   ├── client.js
+│   ├── commits.js
 │   ├── prompts.js
 │   ├── parser.js
 │   ├── renderer.js
 │   ├── git.js
+│   ├── utils.js
 │   └── index.js
-├── phase2-code-reviewer/        ← Code review bot
+├── phase2-code-reviewer/          ← Code review bot
 │   ├── README.md
+│   ├── .env.example
+│   ├── client.js
+│   ├── utils.js
 │   ├── schema.js
 │   ├── validator.js
 │   ├── prompts.js
 │   ├── reviewer.js
 │   ├── renderer.js
-│   └── index.js
-├── phase3-docs-qa/              ← Docs Q&A with RAG
+│   ├── index.js
+│   └── samples/
+│       ├── good.js
+│       └── bad.js
+├── phase3-docs-qa/                ← Docs Q&A with RAG
 │   ├── README.md
+│   ├── .env.example
+│   ├── client.js
+│   ├── utils.js
 │   ├── db.js
 │   ├── chunker.js
 │   ├── embedder.js
+│   ├── pdf-loader.js
 │   ├── ingest.js
 │   ├── retriever.js
 │   ├── generator.js
 │   ├── query.js
-│   └── index.js
-├── phase4-issue-triage/         ← GitHub triage agent
+│   ├── index.js
+│   └── docs/
+│       ├── gemini-quickstart.md
+│       ├── gemini-embeddings.md
+│       └── gemini-models.md
+├── phase4-issue-triage/           ← GitHub triage agent
 │   ├── README.md
+│   ├── .env.example
+│   ├── client.js
+│   ├── utils.js
 │   ├── github.js
 │   ├── tools.js
 │   ├── executor.js
 │   ├── agent.js
 │   └── index.js
-└── phase5-production/           ← Production hardening (in progress)
-    └── README.md
+└── phase5-production/             ← Production hardening
+    ├── README.md
+    ├── .env.example
+    ├── client.js
+    ├── utils.js
+    ├── rateLimiter.js
+    ├── logger.js
+    ├── promptRegistry.js
+    ├── fallback.js
+    ├── cache.js
+    ├── tokens.js
+    ├── pipeline.js
+    ├── db.js                      ← reused from Phase 3
+    ├── retriever.js               ← reused from Phase 3
+    ├── index.js
+    ├── logs/
+    │   └── .gitkeep
+    └── evals/
+        ├── runner.js
+        └── cases.js
 ```
 
 Each phase directory is independently runnable. Shared utilities (`client.js`, `utils.js`) are duplicated by design — no cross-phase imports, no monorepo tooling required.
@@ -217,20 +255,31 @@ node index.js 7     # triage issue #7 — standard labelling + comment
 
 ## Phase 5 — Production AI Hardening
 
-📁 [`phase5-production/`](./phase5-production/) · [Full README](./phase5-production/README.md) *(in progress)*
+📁 [`phase5-production/`](./phase5-production/) · [Full README](./phase5-production/README.md)
 
-Takes the Phase 2 code reviewer and Phase 3 RAG pipeline and hardens them for production: semantic caching, automated evals, structured logging, fallback chains, cost tracking, and prompt versioning.
+Takes the Phase 3 RAG pipeline and hardens it for production: semantic caching, automated evals, structured logging, fallback chains, cost tracking, and prompt versioning. Every query flows through all 5 pillars.
 
-**What you'll learn:**
+**What you learn:**
 
-- Semantic caching with Redis + embeddings — cache by meaning, not exact string
-- Eval framework — automated quality tests that run on every prompt change
-- Structured logging for LLM calls — latency, tokens, cost, model version
-- Fallback chains — Gemini Flash → Gemini Pro → graceful degradation
-- Cost monitoring — know what you're spending before the bill arrives
-- Prompt versioning — treat prompts like code, with history and rollback
+- Semantic caching with Redis + embeddings — cache by meaning, not exact string. "How do I stream?" and "Show me streaming code" are the same cache key
+- Eval framework — automated quality tests with `must_contain`, `must_not_contain`, `min_length`. Exit code 1 when quality drops below threshold — wires into CI
+- Structured JSONL logging — latency, token count, cost, model version, prompt version per call. Query with `jq` instantly
+- Fallback chains — Flash → Pro → degraded response. Never crash, always respond
+- Prompt versioning — all prompts in a registry with version history. Roll back in one line
+- Token counting before calls — `ai.models.countTokens()` for exact pre-call cost estimates
+- Rate limiting — token bucket enforcing RPM ceiling across all API calls
 
-*(Coming soon — building in Phase 5)*
+**The critical lesson:** Logging is the first thing to build, not the last. Every other pillar is easier to verify and debug when you have structured logs from the start. And the free tier's 20 RPD cap is a hard wall for pipeline work — enable billing early. The cost for a learning project is negligible.
+
+```bash
+cd phase5-production && npm install
+node index.js "How do I use streaming?"      # full production pipeline
+node index.js "Show me streaming in Gemini"  # cache hit — $0.000000
+node index.js eval                           # automated eval suite
+node index.js eval v1.1 --verbose            # compare prompt versions
+```
+
+**Infrastructure required:** Redis (Docker), PostgreSQL + pgvector with docs ingested from Phase 3, Gemini API key with billing enabled (free tier hits 20 RPD wall immediately in pipeline work).
 
 ---
 
@@ -252,15 +301,16 @@ Takes the Phase 2 code reviewer and Phase 3 RAG pipeline and hardens them for pr
 
 These aren't hypothetical — every entry below is something that broke during this build:
 
-| Issue                                              | Phase | Root cause                            | Fix                                   |
-| -------------------------------------------------- | ----- | ------------------------------------- | ------------------------------------- |
-| `text-embedding-004` deprecated                  | 3     | Model retired Jan 2026                | Migrated to `gemini-embedding-001`  |
-| HNSW index fails on 3072 dims                      | 3     | pgvector caps HNSW at 2000 dims       | Used `outputDimensionality: 1536`   |
-| JSON truncated mid-response                        | 1     | `maxOutputTokens: 2048` too low     | Raised to `8192`                    |
-| Wrong date in changelog                            | 1     | Model hallucinated from training data | Injected `new Date().toISOString()` |
-| All bug fixes merged into one entry                | 1     | Prompt too vague                      | Added rule: one entry per commit      |
-| Agent skips `search_issues` on obvious duplicate | 4     | Model reads issue body intelligently  | Expected behaviour — let it reason   |
-| `@google/generative-ai` import fails             | 1–4  | Old SDK deprecated                    | Migrated to `@google/genai`         |
+| Issue                                              | Phase | Root cause                                                   | Fix                                                                                                      |
+| -------------------------------------------------- | ----- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `text-embedding-004` deprecated                  | 3     | Model retired Jan 2026                                       | Migrated to `gemini-embedding-001`                                                                     |
+| HNSW index fails on 3072 dims                      | 3     | pgvector caps HNSW at 2000 dims                              | Used `outputDimensionality: 1536`                                                                      |
+| JSON truncated mid-response                        | 1     | `maxOutputTokens: 2048` too low                            | Raised to `8192`                                                                                       |
+| Wrong date in changelog                            | 1     | Model hallucinated from training data                        | Injected `new Date().toISOString()`                                                                    |
+| All bug fixes merged into one entry                | 1     | Prompt too vague                                             | Added rule: one entry per commit                                                                         |
+| Agent skips `search_issues` on obvious duplicate | 4     | Model reads issue body intelligently                         | Expected behaviour — let it reason                                                                      |
+| Free tier 20 RPD wall                              | 5     | Google cut gemini-2.5-flash free tier 92% in Dec 2025        | Enable billing (Tier 1) — costs ~₹1/day for learning                                                   |
+| Retry delay misleading on RPD error                | 5     | 429 says "retry in 11s" but it's a daily cap, not per-minute | Recognise `GenerateRequestsPerDayPerProjectPerModel` in error — wait until midnight or enable billing |
 
 ---
 
