@@ -1,0 +1,22 @@
+{
+  "name": "06-research-assistant",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "create-sample-docs": "node scripts/create-docs.js",
+    "start:ingest": "node rag/ingest.js",
+    "create-name": "node index.js shubh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.47.0",
+    "dotenv": "^17.3.1",
+    "pg": "^8.20.0",
+    "readline": "^1.3.0"
+  }
+}
