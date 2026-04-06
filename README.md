@@ -35,7 +35,7 @@ Each phase produces a real, working project. Concepts compound from phase to pha
 ```
 genai-roadmap/
 ├── README.md                      ← you are here
-├── phase1-changelog-gen/          ← Smart changelog generator
+├── 01-changelog-gen/          ← Smart changelog generator
 │   ├── README.md
 │   ├── .env.example
 │   ├── client.js
@@ -46,7 +46,7 @@ genai-roadmap/
 │   ├── git.js
 │   ├── utils.js
 │   └── index.js
-├── phase2-code-reviewer/          ← Code review bot
+├── 02-code-reviewer/          ← Code review bot
 │   ├── README.md
 │   ├── .env.example
 │   ├── client.js
@@ -60,7 +60,7 @@ genai-roadmap/
 │   └── samples/
 │       ├── good.js
 │       └── bad.js
-├── phase3-docs-qa/                ← Docs Q&A with RAG
+├── 03-docs-qa/                ← Docs Q&A with RAG
 │   ├── README.md
 │   ├── .env.example
 │   ├── client.js
@@ -78,7 +78,7 @@ genai-roadmap/
 │       ├── gemini-quickstart.md
 │       ├── gemini-embeddings.md
 │       └── gemini-models.md
-├── phase4-issue-triage/           ← GitHub triage agent
+├── 04-issue-triage/           ← GitHub triage agent
 │   ├── README.md
 │   ├── .env.example
 │   ├── client.js
@@ -88,7 +88,7 @@ genai-roadmap/
 │   ├── executor.js
 │   ├── agent.js
 │   └── index.js
-└── phase5-production/             ← Production hardening
+└── 05-production/             ← Production hardening
     ├── README.md
     ├── .env.example
     ├── client.js
@@ -152,7 +152,7 @@ export async function withRetry(fn, retries = 3, baseDelayMs = 1000) {
 
 ## Phase 1 — Smart Changelog Generator
 
-📁 [`phase1-changelog-gen/`](./phase1-changelog-gen/) · [Full README](./phase1-changelog-gen/README.md)
+📁 [`01-changelog-gen/`](./01-changelog-gen/) · [Full README](./01-changelog-gen/README.md)
 
 Transforms raw `git log` output into a structured, categorised changelog using Gemini. Output is both JSON and Markdown.
 
@@ -167,7 +167,7 @@ Transforms raw `git log` output into a structured, categorised changelog using G
 **The critical lesson:** LLMs are text-in, text-out. Your entire job is crafting the input string. The quality of the output is a direct function of the quality of your prompt — including what examples you show, what rules you number, and what you explicitly forbid.
 
 ```bash
-cd phase1-changelog-gen && npm install
+cd 01-changelog-gen && npm install
 node index.js
 # Output: CHANGELOG.md
 ```
@@ -176,7 +176,7 @@ node index.js
 
 ## Phase 2 — Code Review Bot
 
-📁 [`phase2-code-reviewer/`](./phase2-code-reviewer/) · [Full README](./phase2-code-reviewer/README.md)
+📁 [`02-code-reviewer/`](./02-code-reviewer/) · [Full README](./02-code-reviewer/README.md)
 
 Runs a thorough code review on any source file. Detects bugs, security vulnerabilities, performance issues, and maintainability problems — with a concrete fix for each.
 
@@ -191,7 +191,7 @@ Runs a thorough code review on any source file. Detects bugs, security vulnerabi
 **The critical lesson:** Treat LLM output as untrusted external data. Validate it the same way you'd validate any API response — schema check, type check, required field check. Silent schema drift breaks downstream code without throwing an error.
 
 ```bash
-cd phase2-code-reviewer && npm install
+cd 02-code-reviewer && npm install
 node index.js samples/bad.js     # score: ~15/100, 7 issues
 node index.js samples/good.js    # score: ~90/100, minimal issues
 ```
@@ -200,7 +200,7 @@ node index.js samples/good.js    # score: ~90/100, minimal issues
 
 ## Phase 3 — Docs Q&A API (RAG)
 
-📁 [`phase3-docs-qa/`](./phase3-docs-qa/) · [Full README](./phase3-docs-qa/README.md)
+📁 [`03-docs-qa/`](./03-docs-qa/) · [Full README](./03-docs-qa/README.md)
 
 Answers natural language questions grounded strictly in your documents. Uses Gemini embeddings + pgvector for semantic search, with source citations on every answer.
 
@@ -216,19 +216,19 @@ Answers natural language questions grounded strictly in your documents. Uses Gem
 **The critical lesson:** Chunking is the hardest part of RAG, not the model. A perfect model with bad chunks gives bad answers. The same embedding model must be used at both ingest time and query time — mixing models produces wrong results silently.
 
 ```bash
-cd phase3-docs-qa && npm install
+cd 03-docs-qa && npm install
 node ingest.js                                    # embed and store docs
 node index.js "How do I use streaming?"           # grounded answer
 node index.js "What is the capital of France?"    # "I don't have info..."
 ```
 
-**Infrastructure required:** PostgreSQL with pgvector extension. See [Phase 3 README](./phase3-docs-qa/README.md) for Docker setup.
+**Infrastructure required:** PostgreSQL with pgvector extension. See [Phase 3 README](./03-docs-qa/README.md) for Docker setup.
 
 ---
 
 ## Phase 4 — GitHub Issue Triage Agent
 
-📁 [`phase4-issue-triage/`](./phase4-issue-triage/) · [Full README](./phase4-issue-triage/README.md)
+📁 [`04-issue-triage/`](./04-issue-triage/) · [Full README](./04-issue-triage/README.md)
 
 Triages GitHub issues autonomously via the ReAct loop. Reads issues, searches for duplicates, applies labels, posts comments, closes duplicates — without human input.
 
@@ -244,18 +244,18 @@ Triages GitHub issues autonomously via the ReAct loop. Reads issues, searches fo
 **The critical lesson:** The model never calls GitHub. It says "I want to call `search_issues` with these arguments." You call GitHub. You tell the model what came back. It decides what to do next. Understanding this mechanical separation is understanding every agent framework ever built.
 
 ```bash
-cd phase4-issue-triage && npm install
+cd 04-issue-triage && npm install
 node index.js 4     # triage issue #4 — duplicate detection
 node index.js 7     # triage issue #7 — standard labelling + comment
 ```
 
-**Infrastructure required:** GitHub account + fine-grained PAT with Issues read/write. See [Phase 4 README](./phase4-issue-triage/README.md) for token setup.
+**Infrastructure required:** GitHub account + fine-grained PAT with Issues read/write. See [Phase 4 README](./04-issue-triage/README.md) for token setup.
 
 ---
 
 ## Phase 5 — Production AI Hardening
 
-📁 [`phase5-production/`](./phase5-production/) · [Full README](./phase5-production/README.md)
+📁 [`05-production/`](./05-production/) · [Full README](./05-production/README.md)
 
 Takes the Phase 3 RAG pipeline and hardens it for production: semantic caching, automated evals, structured logging, fallback chains, cost tracking, and prompt versioning. Every query flows through all 5 pillars.
 
@@ -272,7 +272,7 @@ Takes the Phase 3 RAG pipeline and hardens it for production: semantic caching, 
 **The critical lesson:** Logging is the first thing to build, not the last. Every other pillar is easier to verify and debug when you have structured logs from the start. And the free tier's 20 RPD cap is a hard wall for pipeline work — enable billing early. The cost for a learning project is negligible.
 
 ```bash
-cd phase5-production && npm install
+cd 05-production && npm install
 node index.js "How do I use streaming?"      # full production pipeline
 node index.js "Show me streaming in Gemini"  # cache hit — $0.000000
 node index.js eval                           # automated eval suite
@@ -320,7 +320,7 @@ Pick a phase, clone the repo, and run:
 
 ```bash
 git clone https://github.com/your-username/genai-roadmap
-cd genai-roadmap/phase1-changelog-gen
+cd genai-roadmap/01-changelog-gen
 npm install
 cp .env.example .env   # add your GEMINI_API_KEY
 node index.js
