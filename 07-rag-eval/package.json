@@ -1,0 +1,19 @@
+{
+  "name": "07-rag-eval",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node runner.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.48.0",
+    "dotenv": "^17.4.0",
+    "pg": "^8.20.0"
+  }
+}
