@@ -10,31 +10,31 @@ Each phase produces a real, working project. Concepts compound from phase to pha
 
 > Build first. Understand by doing. No frameworks until they earn their place.
 
-* Every phase = one real project, 2–5 days to build
-* Raw SDK calls before frameworks — you see the mechanics, not the abstraction
-* Each project is independently runnable and portfolio-ready
-* Mistakes and fixes documented — the learning is in the debugging
+- Every phase = one real project, 2–5 days to build
+- Raw SDK calls before frameworks — you see the mechanics, not the abstraction
+- Each project is independently runnable and portfolio-ready
+- Mistakes and fixes documented — the learning is in the debugging
 
 ---
 
 ## The roadmap
 
-| #                                                                                                       | Project                       | Core concept                                 | Status      |
-| ------------------------------------------------------------------------------------------------------- | ----------------------------- | -------------------------------------------- | ----------- |
-| [01](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#01--smart-changelog-generator)            | Smart changelog generator     | Prompting, structured output, streaming      | ✅ Complete |
-| [02](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#02--code-review-bot)                      | Code review bot               | Prompt chaining, schema-first design         | ✅ Complete |
-| [03](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#03--docs-qa-api-rag)                      | Docs Q&A API                  | Embeddings, vector search, grounding         | ✅ Complete |
-| [04](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#04--github-issue-triage-agent)            | GitHub issue triage agent     | ReAct loop, function calling                 | ✅ Complete |
-| [05](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#05--production-ai-hardening)              | Production AI hardening       | Caching, evals, observability, cost          | ✅ Complete |
-| [06](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#06--persistent-research-assistant)        | Persistent research assistant | Agent memory, contextual retrieval           | ✅ Complete |
-| [07](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#07--rag-eval-harness)                     | RAG eval harness              | LLM-as-judge, RAGAS metrics                  | ✅ Complete |
-| [08](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#08--fine-tuning-vs-rag-vs-prompting)      | Fine-tuning comparison        | When to fine-tune, ROI, platform limits      | ✅ Complete |
-| [09](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#09--custom-mcp-server)                    | Custom MCP server             | Model Context Protocol, stdio transport      | ✅ Complete |
-| [10](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#10--agentic-rag-next)                     | Agentic RAG                   | Agent-driven retrieval, native JSON mode     | 🔜 Next     |
-| [11](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#11--multi-provider--langchain-planned)    | Multi-provider + LangChain    | Vercel AI SDK, provider tradeoffs            | 🔜 Planned  |
-| [12](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#12--local-models--ollama-planned)         | Local models — Ollama        | Open-source, offline, $0 cost                | 🔜 Planned  |
-| [13](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#13--multi-agent-systems-planned)          | Multi-agent systems           | Orchestrator + subagents, parallel execution | 🔜 Planned  |
-| [14](https://claude.ai/chat/8e2d14d1-d473-4bdb-9651-da72795623a9#14--browser-agents--long-context-planned) | Browser agents + long-context | Computer use, 1M token context tradeoffs     | 🔜 Planned  |
+| # | Project | Core concept | Status |
+|---|---|---|---|
+| [01](#01--smart-changelog-generator) | Smart changelog generator | Prompting, structured output, streaming | ✅ Complete |
+| [02](#02--code-review-bot) | Code review bot | Prompt chaining, schema-first design | ✅ Complete |
+| [03](#03--docs-qa-api-rag) | Docs Q&A API | Embeddings, vector search, grounding | ✅ Complete |
+| [04](#04--github-issue-triage-agent) | GitHub issue triage agent | ReAct loop, function calling | ✅ Complete |
+| [05](#05--production-ai-hardening) | Production AI hardening | Caching, evals, observability, cost | ✅ Complete |
+| [06](#06--persistent-research-assistant) | Persistent research assistant | Agent memory, contextual retrieval | ✅ Complete |
+| [07](#07--rag-eval-harness) | RAG eval harness | LLM-as-judge, RAGAS metrics | ✅ Complete |
+| [08](#08--fine-tuning-vs-rag-vs-prompting) | Fine-tuning comparison | When to fine-tune, ROI, platform limits | ✅ Complete |
+| [09](#09--custom-mcp-server) | Custom MCP server | Model Context Protocol, stdio transport | ✅ Complete |
+| [10](#10--agentic-rag-next) | Agentic RAG | Agent-driven retrieval, native JSON mode | 🔜 Next |
+| [11](#11--multi-provider--langchain-planned) | Multi-provider + LangChain | Vercel AI SDK, provider tradeoffs | 🔜 Planned |
+| [12](#12--local-models--ollama-planned) | Local models — Ollama | Open-source, offline, $0 cost | 🔜 Planned |
+| [13](#13--multi-agent-systems-planned) | Multi-agent systems | Orchestrator + subagents, parallel execution | 🔜 Planned |
+| [14](#14--browser-agents--long-context-planned) | Browser agents + long-context | Computer use, 1M token context tradeoffs | 🔜 Planned |
 
 ---
 
@@ -196,7 +196,6 @@ Each directory is independently runnable. Shared utilities (`client.js`, `utils.
 These two files appear in every phase. Copy them when starting a new one:
 
 **`client.js`** — GoogleGenAI initialisation:
-
 ```js
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
@@ -206,7 +205,6 @@ export const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 ```
 
 **`utils.js`** — retry with exponential backoff + jitter:
-
 ```js
 export async function withRetry(fn, retries = 3, baseDelayMs = 1000) {
   for (let attempt = 0; attempt < retries; attempt++) {
@@ -229,7 +227,7 @@ export async function withRetry(fn, retries = 3, baseDelayMs = 1000) {
 
 ## 01 — Smart Changelog Generator
 
-📁 [`01-changelog-gen/`](https://claude.ai/chat/01-changelog-gen/) · [Full README](https://claude.ai/chat/01-changelog-gen/README.md)
+📁 [`01-changelog-gen/`](./01-changelog-gen/) · [Full README](./01-changelog-gen/README.md)
 
 Transforms raw `git log` output into a structured, categorised changelog using Gemini. Output is both JSON and Markdown.
 
@@ -247,7 +245,7 @@ node index.js
 
 ## 02 — Code Review Bot
 
-📁 [`02-code-reviewer/`](https://claude.ai/chat/02-code-reviewer/) · [Full README](https://claude.ai/chat/02-code-reviewer/README.md)
+📁 [`02-code-reviewer/`](./02-code-reviewer/) · [Full README](./02-code-reviewer/README.md)
 
 Runs a thorough code review on any source file — bugs, security vulnerabilities, performance issues, maintainability — with a concrete fix for each.
 
@@ -265,7 +263,7 @@ node index.js samples/good.js    # score: ~90/100, minimal issues
 
 ## 03 — Docs Q&A API (RAG)
 
-📁 [`03-docs-qa/`](https://claude.ai/chat/03-docs-qa/) · [Full README](https://claude.ai/chat/03-docs-qa/README.md)
+📁 [`03-docs-qa/`](./03-docs-qa/) · [Full README](./03-docs-qa/README.md)
 
 Answers natural language questions grounded strictly in your documents — Gemini embeddings + pgvector + source citations on every answer.
 
@@ -286,7 +284,7 @@ node index.js "What is the capital of France?"   # → "I don't have info..."
 
 ## 04 — GitHub Issue Triage Agent
 
-📁 [`04-issue-triage/`](https://claude.ai/chat/04-issue-triage/) · [Full README](https://claude.ai/chat/04-issue-triage/README.md)
+📁 [`04-issue-triage/`](./04-issue-triage/) · [Full README](./04-issue-triage/README.md)
 
 Triages GitHub issues autonomously — reads issues, finds duplicates, applies labels, posts comments, closes duplicates without human input.
 
@@ -306,7 +304,7 @@ node index.js 7     # standard labelling + comment
 
 ## 05 — Production AI Hardening
 
-📁 [`05-production/`](https://claude.ai/chat/05-production/) · [Full README](https://claude.ai/chat/05-production/README.md)
+📁 [`05-production/`](./05-production/) · [Full README](./05-production/README.md)
 
 Hardens the Phase 3 RAG pipeline for production — semantic caching, automated evals, structured logging, fallback chains, cost tracking, prompt versioning.
 
@@ -326,7 +324,7 @@ node index.js eval
 
 ## 06 — Persistent Research Assistant
 
-📁 [`06-research-assistant/`](https://claude.ai/chat/06-research-assistant/) · [Full README](https://claude.ai/chat/06-research-assistant/README.md)
+📁 [`06-research-assistant/`](./06-research-assistant/) · [Full README](./06-research-assistant/README.md)
 
 A CLI research assistant that remembers your preferences, conclusions, and sources across sessions using short-term (in-memory) and long-term (pgvector) memory, with contextual retrieval for 49% fewer retrieval failures.
 
@@ -347,7 +345,7 @@ node index.js yourname    # Session 2 — picks up memories
 
 ## 07 — RAG Eval Harness
 
-📁 [`07-rag-evals/`](https://claude.ai/chat/07-rag-evals/) · [Full README](https://claude.ai/chat/07-rag-evals/README.md)
+📁 [`07-rag-evals/`](./07-rag-evals/) · [Full README](./07-rag-evals/README.md)
 
 Automated quality evaluation for the 06 RAG pipeline — four RAGAS-aligned metrics scored by an LLM judge using native JSON mode.
 
@@ -364,7 +362,7 @@ node runner.js    # exits 0 if ≥ 0.70, exits 1 if below — CI-ready
 
 ## 08 — Fine-Tuning vs RAG vs Prompting
 
-📁 [`08-finetuning/`](https://claude.ai/chat/08-finetuning/) · [Full README](https://claude.ai/chat/08-finetuning/README.md)
+📁 [`08-finetuning/`](./08-finetuning/) · [Full README](./08-finetuning/README.md)
 
 Head-to-head comparison of zero-shot vs few-shot approaches on changelog generation. Includes training data prep, ROI calculation, and documented platform limitation.
 
@@ -382,7 +380,7 @@ node compare.js
 
 ## 09 — Custom MCP Server
 
-📁 [`09-mcp-server/`](https://claude.ai/chat/09-mcp-server/) · [Full README](https://claude.ai/chat/09-mcp-server/README.md)
+📁 [`09-mcp-server/`](./09-mcp-server/) · [Full README](./09-mcp-server/README.md)
 
 Exposes the 06 RAG pipeline, agent memory, and 04 GitHub tools as a standardised MCP server — connectable to Claude Desktop or any MCP client without writing agent code.
 
@@ -442,18 +440,18 @@ Browser agent using Playwright. Explores the 1M token context vs RAG tradeoff �
 
 ## Tech stack (all phases)
 
-| Tool                                                     | Role               | Notes                                                           |
-| -------------------------------------------------------- | ------------------ | --------------------------------------------------------------- |
-| [`@google/genai`](https://github.com/googleapis/js-genai) | Gemini SDK         | Official SDK — replaces deprecated `@google/generative-ai`   |
-| `gemini-2.5-flash`                                     | Generation         | Fast, 1M context, best default                                  |
-| `gemini-2.5-flash-lite`                                | Judge / eval model | $0.10/M tokens — cheapest stable option                        |
-| `gemini-embedding-001`                                 | Embeddings         | Replaces deprecated `text-embedding-004`(Jan 2026), 1536 dims |
-| PostgreSQL + pgvector                                    | Vector store       | HNSW index, cosine similarity                                   |
-| Redis                                                    | Semantic cache     | Phase 05                                                        |
-| `@octokit/rest`                                        | GitHub API         | Phases 04 + 09                                                  |
-| `@modelcontextprotocol/sdk`                            | MCP server         | Phase 09                                                        |
-| `zod`                                                  | Schema validation  | Phase 09 tool parameters                                        |
-| No LangChain (Phases 01–09)                             | —                 | Raw SDK first — frameworks introduced in Phase 11              |
+| Tool | Role | Notes |
+|---|---|---|
+| [`@google/genai`](https://github.com/googleapis/js-genai) | Gemini SDK | Official SDK — replaces deprecated `@google/generative-ai` |
+| `gemini-2.5-flash` | Generation | Fast, 1M context, best default |
+| `gemini-2.5-flash-lite` | Judge / eval model | $0.10/M tokens — cheapest stable option |
+| `gemini-embedding-001` | Embeddings | Replaces deprecated `text-embedding-004` (Jan 2026), 1536 dims |
+| PostgreSQL + pgvector | Vector store | HNSW index, cosine similarity |
+| Redis | Semantic cache | Phase 05 |
+| `@octokit/rest` | GitHub API | Phases 04 + 09 |
+| `@modelcontextprotocol/sdk` | MCP server | Phase 09 |
+| `zod` | Schema validation | Phase 09 tool parameters |
+| No LangChain (Phases 01–09) | — | Raw SDK first — frameworks introduced in Phase 11 |
 
 ---
 
@@ -461,22 +459,22 @@ Browser agent using Playwright. Explores the 1M token context vs RAG tradeoff �
 
 Every entry below is something that actually broke during this build:
 
-| Issue                                             | Phase  | Root cause                                             | Fix                                                                                       |
-| ------------------------------------------------- | ------ | ------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| `@google/generative-ai`import fails             | 01–04 | Old SDK deprecated                                     | Migrated to `@google/genai`                                                             |
-| JSON truncated mid-response                       | 01     | `maxOutputTokens: 2048`too low                       | Raised to `8192`                                                                        |
-| Wrong date in changelog                           | 01     | Model hallucinated from training data                  | Injected `new Date().toISOString()`                                                     |
-| All bug fixes merged into one entry               | 01     | Prompt too vague                                       | Added rule: one entry per commit                                                          |
-| `text-embedding-004`deprecated                  | 03     | Model retired Jan 2026                                 | Migrated to `gemini-embedding-001`                                                      |
-| HNSW index fails on 3072 dims                     | 03     | pgvector caps HNSW at 2000 dims                        | Used `outputDimensionality: 1536`                                                       |
-| Agent skips `search_issues`on obvious duplicate | 04     | Model reads issue body and reasons correctly           | Expected — let it reason                                                                 |
-| Free tier 20 RPD wall                             | 05     | Google cut free tier 92% Dec 2025                      | Enable billing (Tier 1)                                                                   |
-| `retry in 11s`misleading on daily quota error   | 05     | 429 = daily cap, not per-minute                        | Detect `GenerateRequestsPerDayPerProjectPerModel`— wait for midnight or enable billing |
-| Agent says "no memories from past sessions"       | 06     | Model not emitting `[REMEMBER:]`signals              | Made instruction CRITICAL + MUST in system prompt                                         |
-| Meta-questions return no memories                 | 06     | Semantic similarity too low for "what did we discuss?" | Added recent memory fallback — always loads last 3                                       |
-| DBeaver can't display vector column rows          | 06     | DBeaver doesn't render `vector`type                  | Query without embedding column                                                            |
-| `ai.tunings.create is not a function`           | 08     | Tuning not in Gemini Developer API JS SDK              | Use REST API or Vertex AI                                                                 |
-| Fine-tuning REST API 400 error                    | 08     | Gemini Developer API dropped tuning mid-2025           | Concept documented; requires Vertex AI for execution                                      |
+| Issue | Phase | Root cause | Fix |
+|---|---|---|---|
+| `@google/generative-ai` import fails | 01–04 | Old SDK deprecated | Migrated to `@google/genai` |
+| JSON truncated mid-response | 01 | `maxOutputTokens: 2048` too low | Raised to `8192` |
+| Wrong date in changelog | 01 | Model hallucinated from training data | Injected `new Date().toISOString()` |
+| All bug fixes merged into one entry | 01 | Prompt too vague | Added rule: one entry per commit |
+| `text-embedding-004` deprecated | 03 | Model retired Jan 2026 | Migrated to `gemini-embedding-001` |
+| HNSW index fails on 3072 dims | 03 | pgvector caps HNSW at 2000 dims | Used `outputDimensionality: 1536` |
+| Agent skips `search_issues` on obvious duplicate | 04 | Model reads issue body and reasons correctly | Expected — let it reason |
+| Free tier 20 RPD wall | 05 | Google cut free tier 92% Dec 2025 | Enable billing (Tier 1) |
+| `retry in 11s` misleading on daily quota error | 05 | 429 = daily cap, not per-minute | Detect `GenerateRequestsPerDayPerProjectPerModel` — wait for midnight or enable billing |
+| Agent says "no memories from past sessions" | 06 | Model not emitting `[REMEMBER:]` signals | Made instruction CRITICAL + MUST in system prompt |
+| Meta-questions return no memories | 06 | Semantic similarity too low for "what did we discuss?" | Added recent memory fallback — always loads last 3 |
+| DBeaver can't display vector column rows | 06 | DBeaver doesn't render `vector` type | Query without embedding column |
+| `ai.tunings.create is not a function` | 08 | Tuning not in Gemini Developer API JS SDK | Use REST API or Vertex AI |
+| Fine-tuning REST API 400 error | 08 | Gemini Developer API dropped tuning mid-2025 | Concept documented; requires Vertex AI for execution |
 
 ---
 
@@ -494,13 +492,13 @@ Get a free Gemini API key at [aistudio.google.com](https://aistudio.google.com/a
 
 **API keys needed across the full roadmap:**
 
-| Phase  | Provider                  | Where                                                                  |
-| ------ | ------------------------- | ---------------------------------------------------------------------- |
-| 01–09 | Gemini (billing enabled)  | [aistudio.google.com](https://aistudio.google.com/)                       |
-| 04, 09 | GitHub PAT (fine-grained) | GitHub → Settings → Developer settings                               |
-| 11     | OpenAI                    | [platform.openai.com](https://platform.openai.com/)— $5 min topup        |
-| 11     | Anthropic                 | [console.anthropic.com](https://console.anthropic.com/)— $5 free credits |
-| 12     | None (Ollama local)       | [ollama.ai](https://ollama.ai/)— free                                    |
+| Phase | Provider | Where |
+|---|---|---|
+| 01–09 | Gemini (billing enabled) | [aistudio.google.com](https://aistudio.google.com) |
+| 04, 09 | GitHub PAT (fine-grained) | GitHub → Settings → Developer settings |
+| 11 | OpenAI | [platform.openai.com](https://platform.openai.com) — $5 min topup |
+| 11 | Anthropic | [console.anthropic.com](https://console.anthropic.com) — $5 free credits |
+| 12 | None (Ollama local) | [ollama.ai](https://ollama.ai) — free |
 
 ---
 
@@ -514,11 +512,11 @@ The goal: go from "I've heard of RAG" to "I've built and debugged a production-s
 
 ## References
 
-* [Google Gen AI JS SDK](https://github.com/googleapis/js-genai)
-* [Gemini API docs](https://ai.google.dev/gemini-api/docs)
-* [pgvector](https://github.com/pgvector/pgvector)
-* [Model Context Protocol](https://modelcontextprotocol.io/)
-* [RAGAS paper](https://arxiv.org/abs/2309.15217)
-* [ReAct paper](https://arxiv.org/abs/2210.03629)
-* [Anthropic: Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval)
-* [Google AI Studio](https://aistudio.google.com/)
+- [Google Gen AI JS SDK](https://github.com/googleapis/js-genai)
+- [Gemini API docs](https://ai.google.dev/gemini-api/docs)
+- [pgvector](https://github.com/pgvector/pgvector)
+- [Model Context Protocol](https://modelcontextprotocol.io)
+- [RAGAS paper](https://arxiv.org/abs/2309.15217)
+- [ReAct paper](https://arxiv.org/abs/2210.03629)
+- [Anthropic: Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval)
+- [Google AI Studio](https://aistudio.google.com)
